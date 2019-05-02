@@ -1,0 +1,18 @@
+type Comment {
+  id: ID! @id @unique
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  isPublic: Boolean! @default(value: false)
+  message: String!
+  author: User!
+  children: [Comment!]! @relation(name: "CommentOnComment", onDelete: CASCADE)
+  parent: Comment @relation(name: "CommentOnComment", onDelete: SET_NULL)
+}
+
+type User {
+  id: ID! @id @unique
+  email: String! @unique
+  password: String!
+  name: String!
+  comments: [Comment!]!
+}
